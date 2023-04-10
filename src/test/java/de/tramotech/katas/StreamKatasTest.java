@@ -6,6 +6,7 @@ import de.tramotech.katas.model.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -73,6 +74,14 @@ class StreamKatasTest {
         assertThat(actual).hasSameElementsAs(List.of("929-1234", "325-5678", "929-1234", "325-5678", "423-1254", "777-7777"));
     }
 
+    @Test
+    void filterSummerDates() {
+        List<LocalDate> actual = app.filterSummerDates(generateDates());
+
+        assertThat(actual).hasSameElementsAs(List.of(LocalDate.of(2022, 6, 20),
+                LocalDate.of(2022, 7, 4),
+                LocalDate.of(2022, 8, 25)));
+    }
 
 
 
@@ -102,5 +111,23 @@ class StreamKatasTest {
                 new Transaction("credit", 300.0),
                 new Transaction("debit", 50.0)
         );
+    }
+
+    private List<LocalDate> generateDates() {
+        return List.of(
+                LocalDate.of(2022, 1, 10),
+                LocalDate.of(2022, 2, 1),
+                LocalDate.of(2022, 3, 14),
+                LocalDate.of(2022, 4, 28),
+                LocalDate.of(2022, 5, 19),
+                LocalDate.of(2022, 6, 20),
+                LocalDate.of(2022, 7, 4),
+                LocalDate.of(2022, 8, 25),
+                LocalDate.of(2022, 9, 5),
+                LocalDate.of(2022, 10, 12),
+                LocalDate.of(2022, 11, 16),
+                LocalDate.of(2022, 12, 15)
+        );
+
     }
 }

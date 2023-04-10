@@ -4,6 +4,7 @@ import de.tramotech.katas.model.Person;
 import de.tramotech.katas.model.PhoneNumber;
 import de.tramotech.katas.model.Transaction;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -98,6 +99,16 @@ public class StreamKatas
                 .flatMap(list -> Optional.ofNullable(list.getPhoneNumberList()).orElse(Collections.emptyList()).stream())
                 .map(PhoneNumber::getNumber)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Returns a filtered list of LocalDate objects that fall within the months of June, July, and August.
+     *
+     * @param dates The list of LocalDate objects to filter.
+     * @return A filtered list of LocalDate objects that fall within the months of June, July, and August.
+     */
+    public List<LocalDate> filterSummerDates(List<LocalDate> dates) {
+        return dates.stream().filter(date -> date.getMonthValue() <9 && date.getMonthValue() > 5).collect(Collectors.toList());
     }
 
 
