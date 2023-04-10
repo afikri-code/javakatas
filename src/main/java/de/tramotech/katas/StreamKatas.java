@@ -3,8 +3,10 @@ package de.tramotech.katas;
 import de.tramotech.katas.model.Person;
 import de.tramotech.katas.model.Transaction;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 /**
@@ -55,6 +57,14 @@ public class StreamKatas
                 .map(person -> person.getName().toUpperCase())
                 .distinct()
                 .collect(Collectors.toList());
+    }
+
+    /*
+        Kata: Finding the Oldest Person in a List
+        In this kata, you will practice using Java's Stream API to find the oldest person in a list of persons.
+     */
+    public Person findOldestPerson(List<Person> people) {
+        return people.stream().max(Comparator.comparing(Person::getAge)).orElseThrow(NoSuchElementException::new);
     }
 
     /*
