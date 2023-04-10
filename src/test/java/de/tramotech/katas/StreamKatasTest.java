@@ -1,6 +1,7 @@
 package de.tramotech.katas;
 
 import de.tramotech.katas.model.Person;
+import de.tramotech.katas.model.PhoneNumber;
 import de.tramotech.katas.model.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,6 +57,23 @@ class StreamKatasTest {
         assertThat(actual.values()).hasSize(2).contains(90.0, 569.0);
     }
 
+    @Test
+    void flattenList() {
+        List<List<Integer>> list = List.of(List.of(1, 2, 3), List.of(4, 5), List.of(6), List.of(7, 8, 9));
+
+        List<Integer> actual = app.flattenList(list);
+
+        assertThat(actual).hasSize(9).hasSameElementsAs(List.of(1,2,3,4,5,6,7,8,9));
+    }
+
+    @Test
+    void flattenNestedCollection() {
+        List<String> actual = app.flattenNestedCollection(createListOfPersonWithTelephonNumber());
+
+        assertThat(actual).hasSameElementsAs(List.of("929-1234", "325-5678", "929-1234", "325-5678", "423-1254", "777-7777"));
+    }
+
+
 
 
     private List<Person> createListOfPerson() {
@@ -63,6 +81,15 @@ class StreamKatasTest {
                 new Person("Sophia", 21),
                 new Person("Maximilian", 17),
                 new Person("Emma", 19),
+                new Person("Alexander", 18)
+        );
+    }
+
+    private List<Person> createListOfPersonWithTelephonNumber() {
+        return  List.of(
+                new Person("Sophia", 21, List.of(new PhoneNumber("929-1234"), new PhoneNumber("325-5678"))),
+                new Person("Maximilian", 17, List.of(new PhoneNumber("929-1234"), new PhoneNumber("325-5678"), new PhoneNumber("423-1254"))),
+                new Person("Emma", 19, List.of(new PhoneNumber("777-7777"))),
                 new Person("Alexander", 18)
         );
     }

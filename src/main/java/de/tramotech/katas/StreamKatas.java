@@ -1,12 +1,10 @@
 package de.tramotech.katas;
 
 import de.tramotech.katas.model.Person;
+import de.tramotech.katas.model.PhoneNumber;
 import de.tramotech.katas.model.Transaction;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -82,6 +80,26 @@ public class StreamKatas
     public Map<String, Double> getTotalAmountByTransactionType(List<Transaction> transactions) {
         return transactions.stream().collect(Collectors.groupingBy(Transaction::getType,Collectors.summingDouble(Transaction::getAmount)));
     }
+
+    /*
+        Kata: Flattening a List of Lists
+        In this kata, you will practice using Java's Stream API to flatten a list of lists.
+    */
+    public  List<Integer> flattenList(List<List<Integer>> listOfLists) {
+        return listOfLists.stream().flatMap(Collection::stream).collect(Collectors.toList());
+    }
+
+    /*
+        Kata: Flattening a Nested Collection
+        In this kata, you will practice using Java's Stream API to flatten a list of lists.
+    */
+    public  List<String> flattenNestedCollection(List<Person> people) {
+        return people.stream()
+                .flatMap(list -> Optional.ofNullable(list.getPhoneNumberList()).orElse(Collections.emptyList()).stream())
+                .map(PhoneNumber::getNumber)
+                .collect(Collectors.toList());
+    }
+
 
 
 }
