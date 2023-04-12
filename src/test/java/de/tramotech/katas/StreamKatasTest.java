@@ -45,7 +45,7 @@ class StreamKatasTest {
     void findOldestPerson() {
         Person actual = app.findOldestPerson(createListOfPerson());
 
-        assertThat(actual).isEqualTo(new Person("Sophia", 21));
+        assertThat(actual).isEqualTo(new Person("Sophia", 23));
     }
 
 
@@ -54,9 +54,18 @@ class StreamKatasTest {
     void getTotalAmountByTransactionType() {
         Map<String, Double> actual = app.getTotalAmountByTransactionType(createListOfTransactions());
 
-        assertThat(actual.keySet()).hasSize(2).contains("credit", "debit");
-        assertThat(actual.values()).hasSize(2).contains(90.0, 569.0);
+        assertThat(actual.keySet()).hasSize(2).hasSameElementsAs(List.of("credit", "debit"));
+        assertThat(actual.values()).hasSize(2).hasSameElementsAs(List.of(90.0, 569.0));
     }
+
+    @Test
+    void countPeopleByAge() {
+        Map<Integer, Long> actual = app.countPeopleByAge(createListOfPerson2());
+
+        assertThat(actual.keySet()).hasSize(2).hasSameElementsAs(List.of(25,30));
+        assertThat(actual.values()).hasSize(2).hasSameElementsAs(List.of(2L,3L));
+    }
+
 
     @Test
     void flattenList() {
@@ -84,13 +93,24 @@ class StreamKatasTest {
     }
 
 
-
     private List<Person> createListOfPerson() {
         return  List.of(
-                new Person("Sophia", 21),
+                new Person("Sophia", 23),
                 new Person("Maximilian", 17),
                 new Person("Emma", 19),
-                new Person("Alexander", 18)
+                new Person("Alexander", 18),
+                new Person("Alexander", 21)
+
+        );
+    }
+
+    private List<Person> createListOfPerson2() {
+        return List.of(
+                new Person("Alice", 25),
+                new Person("Bob", 30),
+                new Person("Charlie", 25),
+                new Person("David", 30),
+                new Person("Eva", 25)
         );
     }
 
@@ -128,6 +148,7 @@ class StreamKatasTest {
                 LocalDate.of(2022, 11, 16),
                 LocalDate.of(2022, 12, 15)
         );
-
     }
+
+
 }

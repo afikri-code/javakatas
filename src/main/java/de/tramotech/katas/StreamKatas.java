@@ -42,7 +42,7 @@ public class StreamKatas
      */
     public List<String> getNamesOfAdults(List<Person> people) {
         return people.stream()
-                .filter(p->p.getAge() >= 18)
+                .filter(p-> p!= null && p.getAge() >= 18)
                 .map(Person::getName)
                 .distinct()
                 .collect(Collectors.toList());
@@ -52,7 +52,7 @@ public class StreamKatas
         public List<String> getNamesOfAdultsInUpperCase(List<Person> people);
     */
     public List<String> getNamesOfAdultsInUpperCase(List<Person> people) {
-        return people.stream().filter(p->p.getAge() >= 18)
+        return people.stream().filter(p-> p != null && p.getName() != null && p.getAge() >= 18)
                 .map(person -> person.getName().toUpperCase())
                 .distinct()
                 .collect(Collectors.toList());
@@ -63,7 +63,9 @@ public class StreamKatas
         In this kata, you will practice using Java's Stream API to find the oldest person in a list of persons.
      */
     public Person findOldestPerson(List<Person> people) {
-        return people.stream().max(Comparator.comparing(Person::getAge)).orElseThrow(NoSuchElementException::new);
+        return people.stream()
+                .max(Comparator.comparing(Person::getAge))
+                .orElseThrow(NoSuchElementException::new);
     }
 
     /*
@@ -79,7 +81,8 @@ public class StreamKatas
          }
      */
     public Map<String, Double> getTotalAmountByTransactionType(List<Transaction> transactions) {
-        return transactions.stream().collect(Collectors.groupingBy(Transaction::getType,Collectors.summingDouble(Transaction::getAmount)));
+        return transactions.stream()
+                .collect(Collectors.groupingBy(Transaction::getType,Collectors.summingDouble(Transaction::getAmount)));
     }
 
     /*
@@ -87,7 +90,9 @@ public class StreamKatas
         In this kata, you will practice using Java's Stream API to flatten a list of lists.
     */
     public  List<Integer> flattenList(List<List<Integer>> listOfLists) {
-        return listOfLists.stream().flatMap(Collection::stream).collect(Collectors.toList());
+        return listOfLists.stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
     /*
@@ -96,7 +101,8 @@ public class StreamKatas
     */
     public  List<String> flattenNestedCollection(List<Person> people) {
         return people.stream()
-                .flatMap(list -> Optional.ofNullable(list.getPhoneNumberList()).orElse(Collections.emptyList()).stream())
+                .flatMap(list -> Optional.ofNullable(list.getPhoneNumberList())
+                        .orElse(Collections.emptyList()).stream())
                 .map(PhoneNumber::getNumber)
                 .collect(Collectors.toList());
     }
@@ -108,9 +114,19 @@ public class StreamKatas
      * @return A filtered list of LocalDate objects that fall within the months of June, July, and August.
      */
     public List<LocalDate> filterSummerDates(List<LocalDate> dates) {
-        return dates.stream().filter(date -> date.getMonthValue() <9 && date.getMonthValue() > 5).collect(Collectors.toList());
+        return dates.stream()
+                .filter(date -> date.getMonthValue() <9 && date.getMonthValue() > 5)
+                .collect(Collectors.toList());
     }
 
-
-
+    /**
+     * Counts the number of people in each age group in the given list of people.
+     *
+     * @param listOfPerson a list of {@link Person} objects
+     * @return a {@code Map<Integer, Long>} where the keys are the ages and the values are the counts
+     * @throws NullPointerException if the input list is {@code null}
+     */
+    public Map<Integer, Long> countPeopleByAge(List<Person> listOfPerson) {
+        return listOfPerson.stream().collect(Collectors.groupingBy(Person::getAge, Collectors.counting()));
+    }
 }
