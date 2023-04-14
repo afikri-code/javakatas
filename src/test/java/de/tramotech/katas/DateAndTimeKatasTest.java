@@ -5,10 +5,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DateAndTimeKatasTest {
 
@@ -23,8 +24,25 @@ class DateAndTimeKatasTest {
     public void testAgeCalculation(String birthdate, LocalDate today, String expectedAge) {
         String actualAge = app.calculateAge(birthdate, today);
 
-        assertEquals(expectedAge, actualAge);
+        assertThat(expectedAge).isEqualTo(actualAge);
     }
+
+    @ParameterizedTest
+    @MethodSource("appointementDataProvider")
+    void isValidAppointmentDate(LocalDateTime appointment, boolean expected) {
+        assertThat(app.isValidAppointmentDate(appointment)).isEqualTo(expected);
+    }
+
+    static Collection<Object[]> appointementDataProvider() {
+        return List.of(new Object[][] {
+                { LocalDate.of(2023, 4, 17).atTime(10, 0), true }, // Monday
+                { LocalDate.of(2023, 4, 22).atTime(11, 0), false }, // Saturday
+                { LocalDate.of(2023, 4, 16).atTime(12, 30), false }, // Sunday
+                { LocalDate.of(2023, 4, 17).atTime(8, 59), false }, // Monday
+                { LocalDate.of(2023, 4, 17).atTime(17, 1), false } // Monday
+        });
+    }
+
 
     static Collection<Object[]> ageDataProvider() {
         return List.of(new Object[][] {
