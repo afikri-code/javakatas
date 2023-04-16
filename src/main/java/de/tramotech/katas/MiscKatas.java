@@ -19,38 +19,29 @@ public class MiscKatas {
         int max = 0;
         int start = 0;
         int sum = 0;
-        int resultIndexStart = -1;
-        int resultIndexEnd = -1;
+        int resultIndexStart = 0;
+        int resultIndexEnd = 0;
 
         if(arr == null || arr.length == 0) {
             return new int[] {};
         }
 
         for(int i = 0; i< arr.length; i++) {
-            if(i<start) {
-                // Skip this index since it's part of a previous subarray that we've already checked
-                continue;
-            }
+
             sum += arr[i];
             if(sum < 0) {
                 // Abandon the current subarray and start a new one from the next index
                 sum = 0;
                 start = i+1;
-            }else {
-                // Update the indices of the subarray with the maximum sum if necessary
-                if(sum > max ) {
-                    max = sum;
-                    resultIndexStart = start;
-                    resultIndexEnd = i + 1;
-                }
-
+            }
+            // Update the indices of the subarray with the maximum sum if necessary
+            if(sum > max ) {
+                max = sum;
+                resultIndexStart = start;
+                resultIndexEnd = i + 1;
             }
         }
 
-        if(resultIndexStart < 0) {
-            // No subarray with a positive sum was found, so return an empty array
-            return new int[] {};
-        }
 
         // Return the starting and ending indices of the subarray with the maximum sum
         return Arrays.copyOfRange(arr, resultIndexStart, resultIndexEnd);
