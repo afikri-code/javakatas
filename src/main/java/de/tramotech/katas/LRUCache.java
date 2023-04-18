@@ -1,6 +1,6 @@
 package de.tramotech.katas;
 
-import de.tramotech.katas.model.Node;
+import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +9,25 @@ import java.util.Map;
  * An implementation of LRU Cache using a doubly linked list and a HashMap.
  */
 public class LRUCache {
+    @Data
+    static class Node {
+        /** The key associated with the node */
+        int key;
+
+        /** The value associated with the node */
+        int value;
+
+        /** The previous node in the list */
+        Node previous;
+
+        /** The next node in the list */
+        Node next;
+        public Node(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
     // The maximum number of elements the cache can hold.
     int capacity;
 
