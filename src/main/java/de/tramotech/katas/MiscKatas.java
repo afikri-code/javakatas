@@ -1,6 +1,6 @@
 package de.tramotech.katas;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * Author: Ahmed Fikri
@@ -46,5 +46,44 @@ public class MiscKatas {
         // Return the starting and ending indices of the subarray with the maximum sum
         return Arrays.copyOfRange(arr, resultIndexStart, resultIndexEnd);
     }
+
+    /**
+     * Returns the length of the longest substring in the input string that contains at most k distinct characters.
+     *
+     * @param inputString the input string to be processed
+     * @param k the maximum number of distinct characters allowed in a substring
+     * @return the length of the longest substring with at most k distinct characters
+     * @throws IllegalArgumentException if the length of inputString is greater than 10^4 or k is less than 1 or greater than 26
+     */
+    public int longestSubstring(String inputString, int k) throws IllegalArgumentException {
+        if(inputString.length() > Math.pow(10, 4) || k < 1 || k > 26) {
+            throw new IllegalArgumentException("Length of inputString must not exceed 10^4 and k must be between 1 and 26, inclusive.");
+        }
+
+        int maxLength = 0;
+        for(int startIndex = 0; startIndex < inputString.length(); startIndex++) {
+            Set<Character> charSet = new HashSet<>();
+            charSet.add(inputString.charAt(startIndex));
+            int currentLength = 1;
+            for (int endIndex = startIndex + 1; endIndex < inputString.length(); endIndex++) {
+                char currentChar = inputString.charAt(endIndex);
+                if(charSet.size() == k && !charSet.contains(currentChar)) {
+                    break;
+                }
+                charSet.add(currentChar);
+                currentLength++;
+            }
+            if(charSet.size() == k) {
+                maxLength = Math.max(maxLength, currentLength);
+                if(maxLength >= inputString.length() - startIndex) {
+                    break;
+                }
+            }
+        }
+
+        return maxLength;
+    }
+
+
 
 }

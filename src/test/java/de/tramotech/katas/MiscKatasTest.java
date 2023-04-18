@@ -29,6 +29,26 @@ class MiscKatasTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @ParameterizedTest
+    @MethodSource("longestSubstringDataProvider")
+    void longestSubstring(String s, int k, int expected) {
+
+
+        int actual = app.longestSubstring(s, k);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    static Collection<Object[]> longestSubstringDataProvider() {
+        return List.of(new Object[][] {
+                { "aabbcc", 2, 4},
+                { "aabbcc", 1, 2 },
+                { "aabbcc", 3, 6 },
+                { "aaabbb", 3, 0 },
+                { "aaabbbbcccc", 2, 8},
+                { "abababba", 2, 8},
+        });
+    }
 
     static Collection<Object[]> maxSubarraySumDataProvider() {
         return List.of(new Object[][] {
