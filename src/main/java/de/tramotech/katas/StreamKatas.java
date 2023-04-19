@@ -115,7 +115,7 @@ public class StreamKatas
      */
     public List<LocalDate> filterSummerDates(List<LocalDate> dates) {
         return dates.stream()
-                .filter(date -> date.getMonthValue() <9 && date.getMonthValue() > 5)
+                .filter(date -> List.of(6, 7, 8).contains(date.getMonthValue()))
                 .collect(Collectors.toList());
     }
 
