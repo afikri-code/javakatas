@@ -129,4 +129,19 @@ public class StreamKatas
     public Map<Integer, Long> countPeopleByAge(List<Person> listOfPerson) {
         return listOfPerson.stream().collect(Collectors.groupingBy(Person::getAge, Collectors.counting()));
     }
+
+    /**
+     * Returns a list of integers containing the common elements of the two input lists, in ascending order.
+     *
+     * @param list1 the first input list of integers
+     * @param list2 the second input list of integers
+     * @return a list containing the common elements of both lists, in ascending order
+     */
+    public List<Integer> findCommonElements(List<Integer> list1, List<Integer> list2) {
+        return list1.stream()
+                .filter(list2::contains)
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+    }
 }

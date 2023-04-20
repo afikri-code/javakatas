@@ -5,8 +5,12 @@ import de.tramotech.katas.model.PhoneNumber;
 import de.tramotech.katas.model.Transaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -90,6 +94,24 @@ class StreamKatasTest {
         assertThat(actual).hasSameElementsAs(List.of(LocalDate.of(2022, 6, 20),
                 LocalDate.of(2022, 7, 4),
                 LocalDate.of(2022, 8, 25)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("findCommonElementsDataProvider")
+    void findCommonElements(List<Integer> list1, List<Integer> list2, List<Integer> expected ) {
+        List<Integer> actual = app.findCommonElements(list1, list2);
+        assertThat(actual).containsSequence(expected);
+    }
+
+    static Collection<Object[]> findCommonElementsDataProvider() {
+        return List.of(new Object[][] {
+                { List.of(1, 3, 5, 7, 9), List.of(2, 3, 5, 7, 11), List.of(3, 5, 7) },
+                { List.of(9, 7, 5, 3, 1), List.of(2, 3, 5, 7, 11), List.of(3, 5, 7) },
+                { List.of(1, 1, 1, 2, 2), List.of(1, 3, 5), List.of(1) },
+                { List.of(1, 2), List.of(3, 5), Collections.emptyList()},
+                { Collections.emptyList(), List.of(3, 5), Collections.emptyList()},
+                { List.of(1, 2), Collections.emptyList(), Collections.emptyList()},
+        });
     }
 
 
