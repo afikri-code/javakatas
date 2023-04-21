@@ -1,6 +1,7 @@
 package de.tramotech.katas;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -37,6 +38,13 @@ class MiscKatasTest {
         int actual = app.longestSubstring(s, k);
 
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void calculateAverageGrade() {
+        String actual = app.calculateAverageGrade("/Users/afikri/dev/tmp/grades.txt");
+
+        assertThat(actual).isEqualTo("59,24");
     }
 
     static Collection<Object[]> longestSubstringDataProvider() {

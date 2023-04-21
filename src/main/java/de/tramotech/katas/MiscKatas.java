@@ -1,5 +1,9 @@
 package de.tramotech.katas;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -83,6 +87,50 @@ public class MiscKatas {
 
         return maxLength;
     }
+
+    /**
+     * Reads the grades from the file and calculates the average.
+     *
+     * @return a formatted string containing the average grade, or "NaN" if the file doesn't contain any valid double value
+     */
+    public String calculateAverageGrade(String fileName) {
+        DecimalFormat df = new DecimalFormat("#.##");
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            double average = br.lines()
+                    .map(Optional::ofNullable)
+                    .flatMap(Optional::stream)
+                    .filter(s -> s!= null && !s.isBlank())
+                    .map(this::parseDouble)
+                    .filter(OptionalDouble::isPresent)
+                    .mapToDouble(OptionalDouble::getAsDouble)
+                    .average()
+                    .orElseThrow(() -> new RuntimeException("the file doesn't contain any valid double value"));
+
+            return df.format(average);
+        } catch (IOException e) {
+            System.err.println("An error occurred while reading the file: " + e.getMessage());
+            return "NaN";
+        }
+    }
+
+    /**
+     * Parses the specified string to an OptionalDouble.
+     * If the string can be parsed as a double, an OptionalDouble containing the double value is returned.
+     * Otherwise, an empty OptionalDouble is returned.
+     *
+     * @param s the string to be parsed; must not be null
+     * @return an OptionalDouble containing the double value, or an empty OptionalDouble if the string is not a valid double
+     * @throws NullPointerException if s is null
+     */
+    private OptionalDouble parseDouble(String s) throws NullPointerException {
+        Objects.requireNonNull(s, "s must not be null");
+        try {
+            return OptionalDouble.of((Double.valueOf(s)));
+        } catch (NumberFormatException e) {
+            return OptionalDouble.empty();
+        }
+    }
+
 
 
 
