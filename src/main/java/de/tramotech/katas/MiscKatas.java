@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * Author: Ahmed Fikri
@@ -130,6 +131,19 @@ public class MiscKatas {
             return OptionalDouble.empty();
         }
     }
+
+    /**
+     * Prints numbers from 1 to 100, replacing multiples of 3 with "Fizz", multiples of 5 with "Buzz",
+     * and multiples of both 3 and 5 with "FizzBuzz".
+     */
+    public void printFizzBuzz() {
+        IntStream.rangeClosed(1, 100).forEach(n -> {
+            String str = (n % 3 == 0) ? "Fizz" : "";
+            str = (n % 5 == 0) ? str + "Buzz" : (str.isEmpty())?String.valueOf(n):str;
+            System.out.println(str);
+        });
+    }
+
 
 
 
