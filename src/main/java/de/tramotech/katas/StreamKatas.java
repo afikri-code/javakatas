@@ -144,4 +144,18 @@ public class StreamKatas
                 .sorted()
                 .collect(Collectors.toList());
     }
+
+
+    /**
+     * Finds the longest word in a list of words using Java Streams.
+     *
+     * @param words a list of strings where each string represents a word
+     * @return the longest word in the input list, or an empty string if the input list is empty
+     */
+    public String findLongestWord(List<String> words) {
+        Optional<String> longestWord = words.stream()
+                .max(Comparator.comparing(String::length));
+        return longestWord.orElse("");
+    }
+
 }

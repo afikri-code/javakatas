@@ -103,6 +103,23 @@ class StreamKatasTest {
         assertThat(actual).containsSequence(expected);
     }
 
+    @ParameterizedTest
+    @MethodSource("findLongestWordDataProvider")
+    void findLongestWord(List<String> words, String expected) {
+        String actual = app.findLongestWord(words);
+
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    static Collection<Object[]> findLongestWordDataProvider() {
+        return List.of(new Object[][] {
+                { List.of("apple", "banana", "grapefruit", "orange", "watermelon"), "grapefruit" },
+                { List.of("hello", "world", "java", "streams", "are", "cool"), "streams"},
+                { List.of("hello", "world"), "hello"},
+                { List.of("world", "hello"), "world"},
+        });
+    }
+
     static Collection<Object[]> findCommonElementsDataProvider() {
         return List.of(new Object[][] {
                 { List.of(1, 3, 5, 7, 9), List.of(2, 3, 5, 7, 11), List.of(3, 5, 7) },
