@@ -137,11 +137,12 @@ public class MiscKatas {
      * and multiples of both 3 and 5 with "FizzBuzz".
      */
     public void printFizzBuzz() {
-        IntStream.rangeClosed(1, 100).forEach(n -> {
-            String str = (n % 3 == 0) ? "Fizz" : "";
-            str = (n % 5 == 0) ? str + "Buzz" : (str.isEmpty())?String.valueOf(n):str;
-            System.out.println(str);
-        });
+        IntStream.rangeClosed(1, 100)
+                 .forEach(n -> {
+                     String str = (n % 3 == 0) ? "Fizz" : "";
+                     str = (n % 5 == 0) ? str + "Buzz" : (str.isEmpty()) ? String.valueOf(n) : str;
+                     System.out.println(str);
+                 });
     }
 
 

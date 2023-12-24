@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,24 @@ class StreamKatasTest {
         int actual = app.sumOfOddIntegers(List.of(1,2,3,4,5,6,7,8,9));
 
         assertThat(actual).isEqualTo(25);
+    }
+
+    @Test
+    void countElementFrequency() {
+        int[] arr = {1, 2, 3, 4, 1, 2, 2, 3, 5, 5, 6, 7, 8, 8, 8};
+        Map<Integer, Long> expectedMap = new HashMap<>();
+        expectedMap.put(1, 2L);
+        expectedMap.put(2, 3L);
+        expectedMap.put(3, 2L);
+        expectedMap.put(4, 1L);
+        expectedMap.put(5, 2L);
+        expectedMap.put(6, 1L);
+        expectedMap.put(7, 1L);
+        expectedMap.put(8, 3L);
+
+        Map<Integer, Long> actual = app.countElementFrequency(arr);
+
+        assertThat(actual).isEqualTo(expectedMap);
     }
 
     @Test
@@ -130,6 +149,14 @@ class StreamKatasTest {
                 { List.of(1, 2), Collections.emptyList(), Collections.emptyList()},
         });
     }
+
+
+
+
+
+
+
+
 
 
     private List<Person> createListOfPerson() {

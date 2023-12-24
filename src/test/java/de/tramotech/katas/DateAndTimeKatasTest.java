@@ -21,7 +21,7 @@ class DateAndTimeKatasTest {
 
     @ParameterizedTest
     @MethodSource("ageDataProvider")
-    public void testAgeCalculation(String birthdate, LocalDate today, String expectedAge) {
+    public void calculateAge(String birthdate, LocalDate today, String expectedAge) {
         String actualAge = app.calculateAge(birthdate, today);
 
         assertThat(expectedAge).isEqualTo(actualAge);
