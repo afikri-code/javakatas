@@ -4,11 +4,14 @@ import de.tramotech.katas.model.Person;
 import de.tramotech.katas.model.PhoneNumber;
 import de.tramotech.katas.model.Transaction;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,6 +52,29 @@ class StreamKatasTest {
 
         assertThat(actual).isEqualTo(expectedMap);
     }
+
+    @Test
+    void findDistinctCharacters() {
+        List<String> words = Arrays.asList("hello", "world", "java", "stream");
+
+        List<Character> actual = app.findDistinctCharacters(words);
+
+        assertThat(actual).isEqualTo(List.of('h', 'e', 'l', 'o', 'w', 'r', 'd', 'j', 'a', 'v', 's', 't', 'm'));
+    }
+
+    @Test
+    void transformNestedLists() {
+        List<List<Integer>> input = Arrays.asList(
+          Arrays.asList(3, 1, 4),
+          Arrays.asList(1, 5, 9),
+          Arrays.asList(2, 6, 5, 3)
+        );
+
+        List<Integer> actual = app.transformNestedLists(input);
+
+        assertThat(actual).isEqualTo(List.of(1,4,9,16,25,36,81));
+    }
+
 
     @Test
     void getNamesOfAdults() {
@@ -216,5 +242,26 @@ class StreamKatasTest {
         );
     }
 
+
+    @ParameterizedTest(name = "str = \"{1}\"")
+    @DisplayName("Sample tests")
+    @CsvSource(textBlock = """
+          true,  ooxx
+          false, xooxx
+          true,  ooxXm
+          true,  zpzpzpp
+          false, zzoo
+          true,  xxxooo
+          true,  xxxXooOo
+          false, xxx23424esdsfvxXXOOooo
+          false, xXxxoewrcoOoo
+          false, XxxxooO
+          true,  zssddd
+          false, Xxxxertr34
+          true,  ''
+      """)
+    void sampleTests(boolean expected, String input) {
+        assertThat(app.getXo(input)).isEqualTo(expected);
+    }
 
 }

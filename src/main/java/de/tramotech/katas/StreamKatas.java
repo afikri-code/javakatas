@@ -102,6 +102,16 @@ public class StreamKatas {
   }
 
   /*
+  You are given a list of words. Write a Java method that takes a list of words and returns a list of the distinct
+  characters present in all the words. Each character should be represented as a distinct element in the output list.
+  Use flatMap to achieve this.
+   */
+  public List<Character> findDistinctCharacters(List<String> words) {
+    return words.stream().flatMap(w -> w.chars().mapToObj(c -> (char) c)).distinct()
+                .collect(Collectors.toList());
+  }
+
+  /*
       Kata: Finding the Oldest Person in a List
       In this kata, you will practice using Java's Stream API to find the oldest person in a list of persons.
    */
@@ -128,6 +138,21 @@ public class StreamKatas {
     return transactions.stream()
                        .collect(Collectors.groupingBy(Transaction::getType,
                          Collectors.summingDouble(Transaction::getAmount)));
+  }
+
+  /**
+   * Transforms a list of lists of integers into a single list of unique squared integers in ascending order.
+   *
+   * @param nestedLists List of lists of integers.
+   * @return A list of unique squared integers in ascending order.
+   */
+  public List<Integer> transformNestedLists(List<List<Integer>> nestedLists) {
+    return nestedLists.stream()
+                      .flatMap(List::stream)  // Flatten the nested lists
+                      .distinct()             // Remove duplicates
+                      .map(i -> i * i)        // Square each integer
+                      .sorted()               // Sort the result in ascending order
+                      .collect(Collectors.toList());
   }
 
   /**
@@ -209,6 +234,20 @@ public class StreamKatas {
     Optional<String> longestWord = words.stream()
                                         .max(Comparator.comparing(String::length));
     return longestWord.orElse("");
+  }
+
+  /**
+   * Check to see if a string has the same amount of 'x's and 'o's. The method must return a boolean and be case
+   * insensitive. The string can contain any char.
+   */
+
+  public boolean getXo(String str) {
+    if (str == null) {
+      return false;
+    }
+
+    String strLowercase = str.toLowerCase();
+    return strLowercase.chars().filter(c -> c == (char) 'o').count() == strLowercase.chars().filter(c -> c == (char) 'x').count();
   }
 
 }
